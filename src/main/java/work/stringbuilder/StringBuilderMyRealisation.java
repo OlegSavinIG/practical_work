@@ -1,11 +1,20 @@
 package work.stringbuilder;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.time.LocalDateTime;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class StringBuilderMyRealisation {
     private StringBuilder sb = new StringBuilder();
     private final Deque<Snapshot> history = new ArrayDeque<>();
+    @JsonFormat(
+            shape = JsonFormat.Shape.STRING,
+            pattern = "yy:MM:dd##mm:ss:SSS",
+            locale = "ru_RU"
+    )
+    LocalDateTime time = LocalDateTime.now();
 
     public void append(String newText) {
         saveSnapshot();
