@@ -7,7 +7,7 @@ public class MyMapCollection {
     public <T> Map<T, Integer> mapCreator(T[] arr) {
         Map<T, Integer> result = new HashMap<>();
         for (T object : arr) {
-            result.put(object, result.getOrDefault(object, 0) + 1);
+            result.merge(object, 1, Integer::sum);
         }
         return result;
     }
