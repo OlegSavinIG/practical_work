@@ -21,6 +21,7 @@ public class ComplexTaskExecutor {
         ExecutorService executor = Executors.newFixedThreadPool(threadCount);
         CyclicBarrier barrier = new CyclicBarrier(taskCount, () -> {
             System.out.println("All tasks crossed barrier");
+            shutdownExecutor(executor);
         });
 
         try {
@@ -31,8 +32,9 @@ public class ComplexTaskExecutor {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-       int sum = computeResult(result);
-       System.out.println("Final sum = " + sum + " " + Thread.currentThread().getName());
+        int sum = computeResult(result);
+        System.out.println("Final sum = " + sum + " " + Thread.currentThread().getName());
+
     }
 
     private int computeResult(List<Future<Integer>> result) {
@@ -45,5 +47,17 @@ public class ComplexTaskExecutor {
                     }
                 })
                 .sum();
+    }
+
+    private void shutdownExecutor(ExecutorService executor) {
+        executor.shutdown();
+        try {
+            Thread.sleep(3000);
+//            if (!executor.awaitTermination(5L, )) {
+                executor.shutdownNow();
+//            }
+        } catch (InterruptedException e) {
+            executor.shutdownNow();
+        }
     }
 }
