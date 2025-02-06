@@ -15,7 +15,7 @@ public class ParallelStreamCollectMapAdvancedExample {
                 new Student("Student4", Map.of("Physics", 78, "Chemistry", 85))
         );
         Map<String, Double> collect = students.parallelStream()
-                .flatMap(student -> student.getGrades().entrySet().parallelStream())
+                .flatMap(student -> student.getGrades().entrySet().stream())
                 .collect(Collectors.groupingBy(
                         Entry::getKey,
                         Collectors.averagingInt(Entry::getValue)));
