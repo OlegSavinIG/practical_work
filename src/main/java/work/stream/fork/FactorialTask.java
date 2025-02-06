@@ -28,7 +28,7 @@ public class FactorialTask extends RecursiveTask<Long> {
             }
             return result;
         } else {
-            int mid = start+(end-start) / 2;
+            int mid = start + (end - start) / 2;
 
             FactorialTask leftTask = new FactorialTask(start, mid);
             FactorialTask rightTask = new FactorialTask(mid + 1, end);
